@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OFFBEAT — Audio, reluctantly.</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23c5bb19'/%3E%3Cpath d='M11 8v16M21 8v16' stroke='%2371116d' stroke-width='5'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css?v=13">
+  <script src="app.js?v=13" defer></script>
+</head>
+<body>
+  <header class="topbar"><a class="wordmark" href="./">OFFBEAT</a><button id="instructions-toggle" class="secondary" aria-controls="instructions-view" aria-expanded="false">Instructions</button></header>
+  <main>
+    <section id="notices" class="notices" aria-label="Input notices" aria-live="polite">
+      <p id="setting-feedback" class="control-feedback"></p>
+      <p id="loop-feedback" class="control-feedback"></p>
+    </section>
+    <div class="intro"><h1>Audio,<br><em>reluctantly.</em></h1></div>
+    <div id="player-view">
+      <section class="workspace" aria-label="Audio player">
+        <aside class="source-panel">
+          <p class="eyebrow">01 / SOURCE MATERIAL</p><h2>Bring your own noise.</h2>
+          <p>Select an MP3 from your device.</p>
+          <label class="file-button" for="file">Choose audio file<input id="file" type="file" accept="audio/*,.mp3,.wav,.m4a,.ogg"></label>
+          <p id="source-status" class="caption" role="status" aria-live="polite"></p>
+          <button id="pause" class="secondary fixed-pause" disabled>Pause</button>
+        </aside>
+        <div class="deck">
+          <div class="deck-top"><span class="eyebrow">02 / PLAYBACK DEPARTMENT</span></div>
+          <div class="track-info"><h2 id="track-name">Nothing on record.</h2><p id="track-note">Select an MP3 from your device to begin.</p></div>
+          <details id="edit-settings" class="status-panel">
+            <summary>Edit settings</summary>
+            <label for="edit-mode">Apply numbers to</label>
+            <select id="edit-mode"><option value="volume">Volume reduction</option><option value="position">Track position (seconds)</option></select>
+          </details>
+          <form id="setting-form" class="control-form" novalidate>
+            <label for="setting">Value</label>
+            <div class="control-entry"><input id="setting" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" aria-describedby="setting-feedback" disabled><button id="setting-submit" disabled>Apply</button></div>
+          </form>
+          <form id="loop-form" class="control-form" novalidate>
+            <label for="loop-command">Loop command</label>
+            <div class="control-entry"><input id="loop-command" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-describedby="loop-feedback" disabled><button id="loop-submit" disabled>Execute</button></div>
+            <p class="loop-indication">Loop indicator <span id="loop-state" class="loop-swatch" data-state="off" role="img" aria-label="Loop indicator"></span></p>
+          </form>
+          <details id="status-panel" class="status-panel">
+            <summary>Session particulars</summary>
+            <p id="state" class="state">AWAITING AUDIO</p>
+            <div class="time-display"><span id="current">00:00</span><span class="duration">/ <span id="duration">00:00</span></span></div>
+            <p>Current volume: <output id="volume-value" for="setting">50%</output></p>
+            <p id="message" class="message" role="status">No file selected.</p>
+          </details>
+        </div>
+      </section>
+      <footer><span>OFFBEAT / LISTENING IS A NEGOTIATION.</span></footer>
+      <details id="services" class="services">
+        <summary>Other operations</summary>
+        <div id="service-grid" class="service-grid"><button id="play" disabled>Play</button></div>
+      </details>
+    </div>
+    <section id="instructions-view" class="instructions-view" hidden tabindex="-1" aria-labelledby="instructions-title">
+      <h2 id="instructions-title">Operating instructions</h2>
+      <h3>Value and edit settings</h3>
+      <p>The Value field changes either volume or track position. Open Edit settings and choose what numbers apply to, then close that menu and enter your number in Value. The chosen mode remains active until you change it or load a new file. Closing the menu hides the selection; the Value label does not change. Opening Instructions preserves both the mode and the value.</p>
+      <h3>Track position</h3>
+      <p>Choose Track position (seconds) in Edit settings. Enter the desired position as a whole number of seconds, with no colon, spaces, or units, and select Apply. The number must not exceed the track duration. For example, one minute is entered as 60. Applying a position leaves playback paused. Use Play in Other operations to start it. Session particulars shows the resulting elapsed time.</p>
+      <h3>Volume reduction</h3>
+      <p>Choose Volume reduction in Edit settings. Enter a whole number from 0 to 100, calculated as 100 minus your desired volume percentage, then select Apply. A value of 0 gives full volume and 100 gives silence. Decimals, signs, spaces, and percent symbols are not accepted. New files start in Volume reduction mode. Session particulars shows the resulting volume.</p>
+      <h3>Loop command</h3>
+      <p>To repeat the current track, enter <code>cycle-track</code> and select Execute. To turn repetition off, enter <code>single-pass</code> and select Execute. Match the spelling and lowercase letters exactly; do not add spaces. The command field clears after a valid command. The square on the player reports the resulting state using the colors below.</p>
+      <p class="legend"><span class="loop-swatch" data-state="on" aria-hidden="true"></span> Loop enabled <span class="loop-swatch" data-state="off" aria-hidden="true"></span> Loop disabled</p>
+      <h3>Playback and notices</h3>
+      <p>Play is inside Other operations below the player. Pause is in the source panel. Session particulars contains playback state, elapsed time, and track length. Input errors appear above the player. Selecting Play opens a confirmation: red Continue starts playback; green Stop leaves it paused. Your file and entered values remain in place when you return.</p>
+      <button id="instructions-return" class="secondary">Return to player</button>
+    </section>
+    <audio id="audio" preload="auto"></audio>
+  </main>
+  <dialog id="confirmation" aria-labelledby="dialog-title" aria-describedby="dialog-description">
+    <form method="dialog"><p class="eyebrow">LISTENER CONTINUITY REVIEW</p><span class="dialog-number" aria-hidden="true">?</span><h2 id="dialog-title">Start playback?</h2><p id="dialog-description">Choose whether to start playback.</p><div class="dialog-actions"><button id="continue" value="continue">Continue</button><button id="stop" class="secondary" value="stop">Stop</button></div><p class="caption">Department of Unnecessary Assurance</p></form>
+  </dialog>
+</body>
+</html>
