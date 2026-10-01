@@ -1,7 +1,7 @@
 # OFFBEAT
 
 A deliberately user-unfriendly audio player for CS4501: Usability Engineering - HW1. The player uses local audio files and intentionally reverses the course guidelines documented below. Controls reverse expected meanings and patterns, data hides in closed panels, instructions occupy a separate view, and error messages appear far from the inputs that triggered them.
-
+## [Use Website Here](https://nateg-10.github.io/CS4501-HW1-Offbeat/offbeat-player/) 
 ## Task instructions
 Use the same MP3, at least 60 seconds long, in both players.
 
