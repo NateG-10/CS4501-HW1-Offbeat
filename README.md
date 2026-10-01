@@ -31,7 +31,7 @@ Regular MP3 player for comparison: **Apple Music on macOS**.
 Each describes implemented behavior and its expected effect. Numbered boxes and captions annotate the supplied screenshots; the captured interface content is unchanged.
 
 ### 1. Guide users towards their goals - Thinking & Problem-Solving
-Play is inside the closed "Other operations" menu below the footer. The unrelated label offers little information scent for someone looking for playback. Pause has a separate fixed location in the header. A user expecting consistent placement must search.
+Play is inside the closed "Other operations" menu below the footer. The unrelated label offers little information scent for someone looking for playback. Pause has a separate fixed location in the source panel. A user expecting consistent placement must search.
 
 ![Annotated screenshot: Finding Play](docs/screenshots/01-hidden-play.png)
 
@@ -93,7 +93,7 @@ Selecting Play in Other operations opens "Start playback?" Red Continue starts a
 5. Open **Other operations** below the footer and select **Play**. In the confirmation, choose the red **Continue** button. Playback starts from the requested position with volume at 30% and looping enabled.
 6. Open **Session particulars** to verify the playback state, position advancing from 00:45, and 30% volume. The green square confirms looping.
 
-Input errors appear above the title. Instructions explains the modes, formula, commands, and color legend, then Return to player restores the controls. The mode and value survive that navigation. All data persists until the page reloads or the browser clears session storage.
+Input errors appear above the title. Instructions explains the modes, formula, commands, and color legend, then Return to player restores the controls. The mode and value survive that navigation. The loaded track and entered values remain available when switching between Instructions and the player. Reloading the page resets the app.
 
 ## Sources and implementation notes
 The guideline names and topics above refer to the provided course lecture material on usability engineering guidelines. The Apple Music app on macOS is used only for the timing comparison, not as a model.
